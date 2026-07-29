@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: task-service
+  profiles:
+    active: local
+
+  liquibase:
+    change-log: classpath:/db.changelog/changelog-master.yml
+
