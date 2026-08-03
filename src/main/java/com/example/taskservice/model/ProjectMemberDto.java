@@ -1,6 +1,8 @@
 package com.example.taskservice.model;
 
-public record ProjectMemberDto(
+import java.util.UUID;
 
+public record ProjectMemberDto(
+        UUID id
 ) {
 }

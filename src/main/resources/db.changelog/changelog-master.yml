@@ -2,3 +2,6 @@ databaseChangeLog:
   - include:
       file: changes/001-create-project.yml
       relativeToChangelogFile: true
+  - include:
+      file: changes/002-project-fields-and-members.yml
+      relativeToChangelogFile: true

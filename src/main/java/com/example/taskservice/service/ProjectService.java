@@ -2,11 +2,16 @@ package com.example.taskservice.service;
 
 import com.example.taskservice.dto.request.ProjectCreateRequestDto;
 import com.example.taskservice.dto.response.ProjectCreateResponseDto;
+import com.example.taskservice.exception.ProjectKeyAlreadyExistsException;
 import com.example.taskservice.mapper.ProjectMapper;
 import com.example.taskservice.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -16,9 +21,29 @@ public class ProjectService {
     private final ProjectMapper projectMapper;
 
     @Transactional
-    public ProjectCreateResponseDto create(ProjectCreateRequestDto projectCreateRequestDto) {
+    public ProjectCreateResponseDto create(ProjectCreateRequestDto request, UUID ownerId) {
+        String normalizedKey = request.key().trim().toUpperCase(Locale.ROOT);
+        if (projectRepository.existsByKeyIgnoreCase(normalizedKey)) {
+            throw new ProjectKeyAlreadyExistsException(normalizedKey);
+        }
 
-        return projectMapper.toDto(projectRepository.save(projectMapper.toEntity(projectCreateRequestDto)));
+        ProjectCreateRequestDto normalizedRequest = new ProjectCreateRequestDto(
+                request.name().trim(),
+                request.description(),
+                normalizedKey,
+                request.projectMembers()
+        );
+        var project = projectMapper.toEntity(normalizedRequest);
+        project.setOwnerId(ownerId);
+        project.setMemberIds(new LinkedHashSet<>());
+        if (request.projectMembers() != null) {
+            project.getMemberIds().addAll(request.projectMembers());
+        }
+        if (ownerId != null) {
+            project.getMemberIds().add(ownerId);
+        }
+
+        return projectMapper.toDto(projectRepository.save(project));
     }
 
 }

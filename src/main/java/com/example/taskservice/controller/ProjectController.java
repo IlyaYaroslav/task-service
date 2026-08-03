@@ -8,18 +8,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("")
+import jakarta.validation.Valid;
+
+import java.util.UUID;
+
+@RequestMapping("/projects")
 @RequiredArgsConstructor
 @RestController
 public class ProjectController {
 
     private final ProjectService projectService;
 
-    @PostMapping()
-    public ResponseEntity<ProjectCreateResponseDto> create(@RequestBody ProjectCreateRequestDto projectCreateRequestDto) {
-        ProjectCreateResponseDto project = projectService.create(projectCreateRequestDto);
+    @PostMapping
+    public ResponseEntity<ProjectCreateResponseDto> create(
+            @Valid @RequestBody ProjectCreateRequestDto projectCreateRequestDto,
+            @RequestHeader(value = "X-User-Id", required = false) UUID ownerId
+    ) {
+        ProjectCreateResponseDto project = projectService.create(projectCreateRequestDto, ownerId);
 
         return ResponseEntity.status(201)
                 .body(project);
