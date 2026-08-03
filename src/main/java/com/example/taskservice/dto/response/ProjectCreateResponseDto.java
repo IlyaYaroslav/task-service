@@ -14,5 +14,6 @@ public record ProjectCreateResponseDto(
         List<ProjectMemberDto> members,
         Instant createdAt,
         Instant updatedAt
+
 ) {
 }
