@@ -13,4 +13,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  mvc:
+    servlet:
+      path: /api/task-service
+
+security:
+  jwt:
+    secret: ${SECURITY_JWT_SECRET}
 

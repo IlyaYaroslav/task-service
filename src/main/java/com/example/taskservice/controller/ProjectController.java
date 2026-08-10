@@ -5,10 +5,10 @@ import com.example.taskservice.dto.response.ProjectCreateResponseDto;
 import com.example.taskservice.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class ProjectController {
     @PostMapping
     public ResponseEntity<ProjectCreateResponseDto> create(
             @Valid @RequestBody ProjectCreateRequestDto projectCreateRequestDto,
-            @RequestHeader(value = "X-User-Id", required = false) UUID ownerId
+            @AuthenticationPrincipal UUID ownerId
     ) {
         ProjectCreateResponseDto project = projectService.create(projectCreateRequestDto, ownerId);
 
