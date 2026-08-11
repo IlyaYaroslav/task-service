@@ -46,4 +46,11 @@ public class ProjectService {
         return projectMapper.toDto(projectRepository.save(project));
     }
 
+    public void deleteProjectById(UUID projectId) {
+        projectRepository.deleteById(projectId);
+    }
+
+    public ProjectCreateResponseDto getProjectByUserId(UUID projectId) {
+        return null;
+    }
 }
