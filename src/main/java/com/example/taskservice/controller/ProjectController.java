@@ -2,6 +2,7 @@ package com.example.taskservice.controller;
 
 import com.example.taskservice.dto.request.ProjectCreateRequestDto;
 import com.example.taskservice.dto.response.ProjectCreateResponseDto;
+import com.example.taskservice.dto.response.ProjectResponseDto;
 import com.example.taskservice.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +45,8 @@ public class ProjectController {
         return ResponseEntity.status(204).build();
     }
 
-    @GetMapping
-    public ResponseEntity<ProjectCreateResponseDto> getProjectByUserId(@RequestParam UUID projectId) {
-        ProjectCreateResponseDto project = projectService.getProjectById(projectId);
-        return ResponseEntity.ok(project);
-    }
-
+//    @GetMapping
+//    public ResponseEntity<ProjectResponseDto> getProjectByUserId(@AuthenticationPrincipal UUID ownerId) {
+//        return ResponseEntity.ok( projectService.getProjectsByUserId(ownerId));
+//    }
 }
