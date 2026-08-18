@@ -2,6 +2,7 @@ package com.example.taskservice.service;
 
 import com.example.taskservice.dto.request.ProjectCreateRequestDto;
 import com.example.taskservice.dto.response.ProjectCreateResponseDto;
+import com.example.taskservice.dto.response.ProjectResponseDto;
 import com.example.taskservice.exception.ProjectKeyAlreadyExistsException;
 import com.example.taskservice.mapper.ProjectMapper;
 import com.example.taskservice.repository.ProjectRepository;
@@ -52,5 +53,9 @@ public class ProjectService {
 
     public ProjectCreateResponseDto getProjectByUserId(UUID projectId) {
         return null;
+    }
+
+    public ProjectResponseDto getProjectsByUserId(UUID ownerId) {
+        return projectMapper.toDto(ownerId, projectRepository.findProjectsByOwnerId(ownerId));
     }
 }

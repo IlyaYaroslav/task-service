@@ -45,8 +45,8 @@ public class ProjectController {
         return ResponseEntity.status(204).build();
     }
 
-//    @GetMapping
-//    public ResponseEntity<ProjectResponseDto> getProjectByUserId(@AuthenticationPrincipal UUID ownerId) {
-//        return ResponseEntity.ok( projectService.getProjectsByUserId(ownerId));
-//    }
+    @GetMapping
+    public ResponseEntity<ProjectResponseDto> getProjectByUserId(@AuthenticationPrincipal UUID ownerId) {
+        return ResponseEntity.ok(projectService.getProjectsByUserId(ownerId));
+    }
 }

@@ -1,13 +1,11 @@
 package com.example.taskservice.dto.response;
 
-import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 public record ProjectResponseDto(
-        UUID id,
-        String name,
-        String key,
-        Instant createdAt,
-        Instant updatedAt
+        UUID ownerId,
+
+        List<ProjectSummaryResponseDto> projects
 ) {
 }
